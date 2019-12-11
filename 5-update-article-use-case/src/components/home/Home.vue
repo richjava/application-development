@@ -5,8 +5,14 @@
     <ul>
       <!-- Use case c2a: Iterate over (loop through) and display articles -->
       <li class="media" v-for="article in articles" v-bind:key="article.id">
-        <!-- Use case c3: Link to details route, passing through the article ID as a param -->
-        <router-link :to="{ name: 'details', params: { articleId: article.id }}">{{article.title}}</router-link>
+        <div class="media-left">
+          <!-- Use case c3: Link to details route, passing through the article ID as a param -->
+          <router-link :to="{ name: 'details', params: { articleId: article.id }}">{{article.title}}</router-link>
+        </div>
+        <div class="action-links">
+          <!-- Use case c5: Add Edit link -->
+          <router-link :to="{ name: 'article-editor', params: { articleId: article.id }}">Edit</router-link>
+        </div>
       </li>
     </ul>
   </div>
@@ -38,4 +44,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.media {
+  display: flex;
+}
+.media-left {
+  width: 80%;
+}
+</style>
