@@ -2,6 +2,11 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const cors = require('cors');
+//Setup s2: Import mongoose
+const mongoose = require("mongoose");
+
+const dotenv = require("dotenv");
+dotenv.config();
 
 var isProduction = process.env.NODE_ENV === 'production';
 
@@ -11,7 +16,7 @@ var app = express();
 //allow cross origin requests 
 app.use(cors());
 
-// Use body-parser middleware so we can access req.body in our route handlers (see routes/v1/articles.js)
+//Setup s1: Use body-parser middleware so we can access req.body in our route handlers (see routes/v1/articles.js)
 //Normal express config defaults
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -19,6 +24,18 @@ app.use(bodyParser.json());
 
 //Setup s1: Use the routes
 app.use(require('./routes'));
+
+//Setup s2: Connect the database
+mongoose.connect(process.env.MONGODB_URI, { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true 
+});
+mongoose.connection.on("open", function (ref) {
+  console.log("✔ MongoDB connected");
+});
+
+//Setup s3: Require all the models
+require("./models/Article");
 
 /// Error handlers
 

@@ -22,10 +22,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
-//Setup s1: Routes
+//Setup s1: Use the routes
 app.use(require('./routes'));
-console.log('db uri', process.env.MONGODB_URI)
-//Setup s2: Database connection
+
+//Setup s2: Connect the database
 mongoose.connect(process.env.MONGODB_URI, { 
   useNewUrlParser: true, 
   useUnifiedTopology: true 
