@@ -1,0 +1,109 @@
+{
+	"variables": [],
+	"info": {
+		"name": "application-development-s1-create-routes",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get articles",
+			"request": {
+				"url": "http://localhost:3000/v1/articles",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+        },
+        {
+			"name": "Get an article",
+			"request": {
+				"url": "http://localhost:3000/v1/articles/5c50c11f75fa7201ceefb1c0",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add an article",
+			"request": {
+				"url": "http://localhost:3000/v1/articles",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "Another article",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "A description",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "body",
+							"value": "Some body",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update an article",
+			"request": {
+				"url": "http://localhost:3000/v1/articles/5c134764ac45dd1df5f4c410",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "Updated title",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an article",
+			"request": {
+				"url": "http://localhost:3000/v1/articles/5c50c11f75fa7201ceefb1c0",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

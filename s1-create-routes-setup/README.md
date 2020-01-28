@@ -5,6 +5,8 @@ An introduction to full stack development using Vue.JS, Node.JS, Express, MongoD
 
 ### Setup
 #### 1. Routes
+To create our API, we need to set up routes that can handle incoming requests. If we want an API that can help us implement CRUD functionality for our application, we'll need to set up
+routes to handle GET, POST, PUT, and DELETE HTTP request methods.
 
 ## Installation
 
