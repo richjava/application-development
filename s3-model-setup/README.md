@@ -40,7 +40,7 @@ IMPORTANT: *DON'T* put the password directly into your code. Use a .env file and
 For a start, we're going to just have one database model - "Article". The [Mongoose schema](https://mongoosejs.com/docs/guide.html) for this model will look like this:
 
 |    Property    |   Type   |
-|       :-:      |    :-:   |
+|       ---      |    ---   |
 |  title         |  String  |
 |  description   |  String  |
 |  body          |  String  |
