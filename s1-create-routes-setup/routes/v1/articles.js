@@ -22,7 +22,7 @@ router.param("article", function(req, res, next, id) {
 
 /**
  * Get all Articles.
- * GET /api/articles
+ * GET /v1/articles
  */
 router.get("/", function(req, res, next) {
   var articles = mockDb;

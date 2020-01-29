@@ -23,55 +23,38 @@ router.param("article", function(req, res, next, id) {
  * GET /v1/articles
  */
 router.get("/", function(req, res, next) {
-  //CRUD s4: Get all articles from the database
-  Article.find({})
-    .sort({ createdAt: "desc" })
-    .then(function(articles) {
+  //CRUD s4: Find out if the request has parameters of "limit" and "offset" which are used for pagination
+  var query = {};
+  var limit = 20;
+  var offset = 0;
+
+  if(typeof req.query.limit !== 'undefined'){
+    limit = req.query.limit;
+  }
+
+  if(typeof req.query.offset !== 'undefined'){
+    offset = req.query.offset;
+  }
+   //CRUD s4: Get all articles from the database from a particular offset and up to a specified limit
+    return Promise.all([
+      Article.find(query)
+        .limit(Number(limit))
+        .skip(Number(offset))
+        .sort({createdAt: 'desc'})
+        .exec(),
+      Article.countDocuments(query).exec()
+    ]).then(function(results){
+      var articles = results[0];
+      var articlesCount = results[1];
+
       return res.json({
-        articles: articles.map(function(article) {
+        articles: articles.map(function(article){
           return article.toJSON();
-        })
+        }),
+        articlesCount: articlesCount
       });
-    });
+   });
 });
-
-//***************************************************
-//* For paginated results, use the following instead
-//**************************************************/
-
-// router.get("/", function(req, res, next) {
-//   //CRUD s4: Find out if the request has parameters of "limit" and "offset" which are used for pagination
-//   var query = {};
-//   var limit = 20;
-//   var offset = 0;
-
-//   if(typeof req.query.limit !== 'undefined'){
-//     limit = req.query.limit;
-//   }
-
-//   if(typeof req.query.offset !== 'undefined'){
-//     offset = req.query.offset;
-//   }
-//    //CRUD s4: Get all articles from the database from a particular offset and up to a specified limit
-//     return Promise.all([
-//       Article.find(query)
-//         .limit(Number(limit))
-//         .skip(Number(offset))
-//         .sort({createdAt: 'desc'})
-//         .exec(),
-//       Article.countDocuments(query).exec()
-//     ]).then(function(results){
-//       var articles = results[0];
-//       var articlesCount = results[1];
-
-//       return res.json({
-//         articles: articles.map(function(article){
-//           return article.toJSON();
-//         }),
-//         articlesCount: articlesCount
-//       });
-//    });
-// });
 
 /**
  * Get an Article by ID.
@@ -117,7 +100,7 @@ router.put("/:article", function(req, res, next) {
 
 router.delete("/:article", function(req, res, next) {
   //CRUD s4: Delete the article and return a 204 status code
-  return Article.deleteOne({id: req.article.id}).then(function(){
+  return Article.deleteOne({ id: req.article.id }).then(function(){
     return res.sendStatus(204);
   });
 });
