@@ -15,3 +15,4 @@ npm run serve
 
 ### Use cases
 #### 1. View About page
+In order for the user to be able to navigate our website, and in this case view the About page, we need to implement routing. In Vue, this is accomplished by using an external plugin - ```vue-router```.

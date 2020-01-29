@@ -18,6 +18,11 @@ npm run serve
 ````
 
 ### Use cases
-#### 1. View About page
+#### 1. View About page (c1)
+In order for the user to be able to navigate our website, and in this case view the About page, we need to implement routing. In Vue, this is accomplished by using an external plugin - ```vue-router```.
 
-#### 2. View articles list
+#### 2a. View articles list (c2a)
+We are going to get our articles from an external API [newsapi.org](https://newsapi.org/). In order to do so we need a Javascript library or Vue plugin that can help us to make and handle HTTP requests. We'll use the Vue plugin ```vue-resource``` for this.
+
+#### 2b. View articles list -extended (c2b)
+A closer look at [newsapi.org](https://newsapi.org/) indicates that we can add more functionality to improve the user experience. The API also exposes a list of news sources. Let's add a new feature that will allow the user to filter the list of articles by new source.
