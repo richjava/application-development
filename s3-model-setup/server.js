@@ -21,6 +21,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//Setup s3: Require all the models
+require("./models/Article");
 
 //Setup s1: Use the routes
 app.use(require('./routes'));
@@ -33,9 +35,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 mongoose.connection.on("open", function (ref) {
   console.log("✔ MongoDB connected");
 });
-
-//Setup s3: Require all the models
-require("./models/Article");
 
 /// Error handlers
 

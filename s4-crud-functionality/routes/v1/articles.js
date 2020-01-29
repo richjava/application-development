@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const _ = require("lodash");
-
+const mongoose = require('mongoose');
 //Setup s4: Get instance of Article model
-var Article = mongoose.model("Article");
+const Article = mongoose.model("Article");
 
 // Preload Article objects on routes with ':article'
 router.param("article", function(req, res, next, id) {
@@ -24,7 +24,7 @@ router.param("article", function(req, res, next, id) {
  */
 router.get("/", function(req, res, next) {
   //Setup s4: Get all articles from the database
-  Article.find(query)
+  Article.find({})
     .sort({ createdAt: "desc" })
     .then(function(articles) {
       return res.json({

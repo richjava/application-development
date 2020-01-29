@@ -2,17 +2,7 @@
 An introduction to full stack development using Vue.JS, Node.JS, Express, MongoDB, and Mongoose.
 
 ## Client-side development
-
-### Use cases
-#### 1. View About page
-
-#### 2. View articles list
-
-#### 3. View article details
-
-#### 4. Add article
-
-## Installation
+### Installation
 
 1. Open the terminal up on this directory and run:
 ````
@@ -26,3 +16,12 @@ VUE_APP_API_URL=http://example-api4.glitch.me/api/
 ````
 npm run serve
 ````
+
+### Use cases
+#### 1. View About page
+
+#### 2. View articles list
+
+#### 3. View article details
+
+#### 4. Add article
