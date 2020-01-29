@@ -25,7 +25,6 @@ MONGODB_URI=<YOUR_CONNECTION_URL>
 - Enter a Username and password (that you don't use for anything else - you could just autogenerate it) and make a note of these so you don't forget them. 
 IMPORTANT: *DON'T* put the password directly into your code. Use a .env file and make sure you have a [.gitignore](https://help.github.com/en/github/using-git/ignoring-files) file in the root of your project that contains a line ```.env```
 - Choose "Read and write to any database", then click "Add User".
-
 4. Whitelist your IP address
 - In the main menu, go to "Network Access". Choose "Allow access from anywhere" and click "Confirm".
 5. Load sample data
@@ -44,6 +43,19 @@ For a start, we're going to just have one database model - "Article". The [Mongo
 |  title         |  String  |
 |  description   |  String  |
 |  body          |  String  |
+
+#### 4. CRUD functionality
+"CRUD" stands for Create, Read, Update, and Delete, and these are the operations that we'll need to implement in order to implement our use cases below. We can achieve this by going back to our ```routes/v1/articles.js``` file and refactoring it to use the database and Mongoose model that we've set up.
+
+#### Use cases
+These are the use cases that we can implement on the server-side in ```routes/v1/articles.js```.
+1. View all articles
+2. View a single article
+3. Add an article
+4. Update an article
+5. Delete an article
+
+Once you have implemented each of the use cases, test the API in Postman and watch the data change in MongoDB Atlas.
 
 
 ## Installation
