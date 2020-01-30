@@ -185,7 +185,7 @@ router.post('/login', function (req, res, next) {
     .then(function (user) {
       if (!user) { return res.status(422).json({ success: false, message: "User not found" }) }
       req.user = user;
-      return res.json({ success: true });
+      return res.json({ user: user.toJSON() });
     })
 });
 
@@ -211,7 +211,7 @@ router.post('/register', function (req, res, next) {
       var user = new User(req.body);
      user.displayName = user.firstName + " " + user.lastName;
     return user.save().then(function(){
-      return res.json({ success: true });
+      return res.json({ user: user.toJSON() });
     });
     })
 });

@@ -76,7 +76,7 @@ export default {
     createArticle(article) {
       //   Use case c4: Send a POST HTTP request to the API endpoint with the article in the request body
       this.$http
-        .post(`${process.env.VUE_APP_API_URL}articles`, article)
+        .post(`${process.env.VUE_APP_API_URL}articles`, { article: article, email: localStorage.userEmail })
         .then(function() {
           this.$router.push({ path: "/" });
         });

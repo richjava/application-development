@@ -82,9 +82,10 @@ export default {
       this.$http
         .post(`${process.env.VUE_APP_API_URL}users/register`, user)
         .then(function(response) {
-          if (response.body.success) {
-            //add logged in status to local storage
+          if (response.body.user) {
+            //add logged in status and user email to local storage
             localStorage.loggedIn = true;
+            localStorage.userEmail = user.email;
             //emit event for Header to recieve
             EventBus.$emit('$loggedIn', true);
             this.$router.push({ path: "/" });

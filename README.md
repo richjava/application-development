@@ -1,11 +1,25 @@
 # Application Development
-An introduction to full stack development using Vue.JS, Node.JS, Express, MongoDB, and Mongoose.
+An introduction to full stack development using Vue.JS, Node.JS, Express, MongoDB, and Mongoose. Includes projects that lead to a fully featured clientside Vue application (directories with a ```c``` prefix) and for a Node.JS backend (directories with an ```s``` prefix).
 
 ## How to use
+The directories in this project are each projects that follow a step by step guide to application devlopment. Open up each one and read its README.md file to find out more. You can use your text editor's search tool to find out the relevant parts of a project by search the project's code (e.g. ```c1:```):
+```c1:``` - ```c7:``` Client-side projects
+```s1:``` - ```s5:``` Server-side projects
 
-The directories in this project are each projects that follow a step by step guide to application devlopment. Open up each one and read its README.md file to find out more. You can use your text editor's search tool to find out the relevant parts of a project by search the project's code:
-c1 - c6 Client-side projects
-s1 -s5 Server-side projects
+## Quick start
+If you just want to see what this project does, follow these steps:
+### Backend
+1. Set up your database following the instructions in the section "MongoDB Atlas setup" below.
+2. In the ```s5-entity-relationships``` directory (the backend project), add a ```.env``` file with ```MONGODB_URI=<YOUR_CONNECTION_URL>``` (substituting the value with your Atlas connection string).
+3. Open your terminal on the ```s5-entity-relationships``` directory (the backend project). In VS Code you can right click on the directory and choose "Open in Terminal".
+6. Run ```npm install```
+7. Run ```npm run dev```
+
+### Frontend
+1. Install Vue CLI (see the section below).
+2. Open a new terminal on the ```c7-entity-relationships-client``` directory (the frontend project).
+3. Run ```npm install```
+4. Run ```npm run serve```
 
 ### Vue CLI installation
 For a computer where have admin permissions (i.e. your own computer) just install the Vue CLI [as instructed](https://cli.vuejs.org/guide/installation.html). If you don't have admin permissions, and you're on a Mac OS, you can do the following.
@@ -47,6 +61,18 @@ source ~/.profile
 ````
 
 ## Client-side development (c1 - c6)
+The development of the clientside project follows six main use cases. Here they are in the order that they will be implemented:
+- View About page
+- View articles list
+- View article details
+- Add article
+- Update article
+- Delete article
+
+A layer of simple auth will be added (not for production apps) for a user to see articles, so there are additional use cases of:
+- sign up
+- login
+- logout
 
 ### Use cases
 #### 1. View About page (c1)
@@ -55,7 +81,7 @@ In order for the user to be able to navigate our website, and in this case view 
 #### 2a. View articles list (c2a)
 We are going to get our articles from an external API [newsapi.org](https://newsapi.org/). In order to do so we need a Javascript library or Vue plugin that can help us to make and handle HTTP requests. We'll use the Vue plugin ```vue-resource``` for this.
 
-#### 2b. View articles list -extended (c2b)
+#### 2b. View articles list - extended (c2b)
 A closer look at [newsapi.org](https://newsapi.org/) indicates that we can add more functionality to improve the user experience. The API also exposes a list of news sources. Let's add a new feature that will allow the user to filter the list of articles by new source.
 
 #### 2c. View articles list - refactored (c2c)
@@ -99,6 +125,12 @@ We have created the User entity on the server, so let's use it. We'll create the
 Login/Logout link can be toggled. We could use the method we used in ```c2c-view-articles-list-refactored``` but this time, let's use a more flexible (and simpler) way - Event Bus.
 
 ## Server-side development (s1 -s5)
+The server-side application needs to be able to handle:
+- routes
+- Object Relational Mapping (ORM) - which means taking an entity object, like ```Article``` and storing it in the database, and vice-versa
+- CRUD (Create, Read, Update, Delete) operations for our ```Article``` and ```User``` entities
+
+As our application is going to have multiple entities, we also need to think about their relationships and how they're going to work with each other.
 
 ### Installation of server side projects
 
@@ -127,7 +159,7 @@ To test POST, PUT and DELETE requests, we're going to use [Postman](https://www.
 In Postman, import the ```s1-create-routes-setup.postman_collection.json``` file from this directory which will create a new collection for you to test out all of the API endpoints.
 
 ### Project functionality
-#### 1. Routes (s1)
+#### 1. Set up routes (s1)
 To create our API, we need to set up routes that can handle incoming requests. If we want an API that can help us implement CRUD functionality for our application, we'll need to set up
 routes to handle GET, POST, PUT, and DELETE HTTP request methods.
 
@@ -183,6 +215,31 @@ Once you have implemented each of the use cases, test the API in the collection 
 ### 5. Relationships between entities (s5)
 Right now our application has one entity (represented by our database model): Articles. Most applications have more than one entity, and the entities in an application often have relationships with each other. For example, a "Comment" entity might belong to a "Post" entity. This would be a "one-to-many" relationship, where one post can have many comments (and a comment can only belong to one particular post). 
 
-We are going to create another entity: Users. In doing so, we need to think about the relationship between users and articles. Mush the same as our example with posts and comments, we can represent users and articles with a one-to-many relationship, i.e. one user can have many articles.
+We are going to create another entity: Users. In doing so, we need to think about the relationship between users and articles. Much the same as our example with posts and comments, we can represent users and articles with a one-to-many relationship, i.e. one user can have many articles.
+
+The schema of the User entity will look like this:
+
+|    Property    |       Type       |
+|       ---      |        ---       |
+|  firstName     |  String          |
+|  lastName      |  String          |
+|  displayName   |  String          |
+|  email         |  String          |
+|  articles      |  Array<Article>  |
+
+And the new schema for our Article entity will look like this:
+
+|    Property    |   Type   |
+|       ---      |    ---   |
+|  title         |  String  |
+|  description   |  String  |
+|  body          |  String  |
+|  author        |  User    |
 
 After completing code necessary to create this relationship, import the ```s5-entity-relationships.postman_collection.json``` file into Postman and test out your new API. 
+
+We now have two projects that comprise a feature-packed full-stack application!
+
+## Next steps
+- This application fits a model where a user can see all articles once logged in. Change the application so that it fits a model where users only have access to their own posts.
+- Improve the application so that it uses a more robust industry standard auth system. One popular set of Express middleware for this is [passport.js](http://www.passportjs.org/) and you can see it in use in [node-express-realworld-example-app](https://github.com/gothinkster/node-express-realworld-example-app).

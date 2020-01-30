@@ -36,8 +36,8 @@ export default {
       this.loggedIn = loggedIn;
     }
   },
-  created: function() {
-    this.loggedIn = localStorage.loggedIn == true;
+  mounted() {
+    this.loggedIn = localStorage.getItem('loggedIn');
     // Use case c3: Get the articles on creation of this component.
     EventBus.$on('$loggedIn', this.setLoggedIn);
   }

@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 //CRUD s4: Get instance of Article model
 const Article = mongoose.model("Article");
 
+//Entity relationships s5: Get instance of User model
+const User = mongoose.model("User");
+
 // Preload Article objects on routes with ':article'
 router.param("article", function(req, res, next, id) {
   //CRUD s4: Get an article from the database by ID and put it in the request object
@@ -70,9 +73,14 @@ router.get("/:article", function(req, res, next) {
  * Add a new Article.
  * POST /v1/articles
  */
-router.post("/", function(req, res, next) {
-  //CRUD s4: Save a new article to the database using the values passed through the request body
-  var article = new Article(req.body);
+router.post("/", async function(req, res, next) {
+  // Entity relationships s5: Save a new article for a user
+  let user = await User.findOne({ email: req.body.email });
+  if(!user){
+    return res.status(422).json({ success: false, message: "User does not exist" })
+  }
+  var article = new Article(req.body.article);
+  article.author = user;
     return article.save().then(function(){
       return res.json({article: article.toJSON()});
     });
