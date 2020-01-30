@@ -117,7 +117,7 @@ router.put("/:article", function(req, res, next) {
 
 router.delete("/:article", function(req, res, next) {
   //CRUD s4: Delete the article and return a 204 status code
-  return Article.deleteOne({id: req.article.id}).then(function(){
+  return Article.findByIdAndRemove(req.article.id).then(function(){
     return res.sendStatus(204);
   });
 });

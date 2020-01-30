@@ -2,9 +2,49 @@
 An introduction to full stack development using Vue.JS, Node.JS, Express, MongoDB, and Mongoose.
 
 ## How to use
+
 The directories in this project are each projects that follow a step by step guide to application devlopment. Open up each one and read its README.md file to find out more. You can use your text editor's search tool to find out the relevant parts of a project by search the project's code:
 c1 - c6 Client-side projects
 s1 -s5 Server-side projects
+
+### Vue CLI installation
+For a computer where have admin permissions (i.e. your own computer) just install the Vue CLI [as instructed](https://cli.vuejs.org/guide/installation.html). If you don't have admin permissions, and you're on a Mac OS, you can do the following.
+
+#### Enabling NPM global installation on Mac OS with no admin privileges
+In your terminal:
+1. Make a directory for npm global installations:
+````
+mkdir ~/.npm-global
+````
+2. Configure npm to use the new directory path:
+````
+ npm config set prefix '~/.npm-global'
+````
+3. Navigate to the root directory:
+````
+cd ~
+````
+4. Check if there is a ```.profile``` file:
+````
+ls -A
+````
+4. If there is no ```.profile``` file, create one:
+````
+touch .profile
+````
+5. Open the file in an editor:
+````
+nano .profile
+````
+6. Add this line:
+````
+export PATH=~/.npm-global/bin:$PATH
+````
+7. Save and close the editor by using the key board: CONTROL + X, then SHIFT + Y, then ENTER
+8. Back on the terminal, update your system variables:
+````
+source ~/.profile
+````
 
 ## Client-side development (c1 - c6)
 
@@ -33,11 +73,30 @@ The article base URL is ```https://api-entity-relationships.glitch.me``` and the
 
 No authentication is necessary to access this API (so you won't need an API key).
 
-#### 4. Add article
+#### 4. Add article (c4)
+Now we're using a custom API, we can really ramp up the features. Let's add full CRUD functionality (create, read, update, delete). Starting with "Create", we'll allow the user to add an article. 
 
-#### 5. Update article
+We should think of what properties an article might have. These will correspond to our front-end app's form fields, and will also match the entity/model we create later in our server-side app. So, an article has:
 
-#### 6. Delete article
+- title
+- description
+- body
+- a time it was created
+- a time it was updated
+
+We'll just handle the title and body on the frontend.
+
+#### 5. Update article (c5)
+In order to implement this use case, we can reuse the ```ArticleEditor``` component and just fill it with values from our database. The difference between this and the ```Add article``` use case is that we need to retrieve an Article by it's ID and make it available to the ```ArticleEditor```.
+
+#### 6. Delete article (c6)
+The last use case to implement in order for our application to have one full set of CRUD functionality is to allow the user to delete articles. Luckily, this is pretty simple!
+
+### Entity relationships (c7)
+This project should be the final one, after ```s5-entity-relationships``` has been completed, because it needs this server-side functionality. 
+
+We have created the User entity on the server, so let's use it. We'll create the ability for a user to sign up and login. It will just be a simple auth system, and therefore it won't be very secure and shouldn't be used for production apps/anything serious. We'll need a way for the Login and Register components to communicate with the Header component so the 
+Login/Logout link can be toggled. We could use the method we used in ```c2c-view-articles-list-refactored``` but this time, let's use a more flexible (and simpler) way - Event Bus.
 
 ## Server-side development (s1 -s5)
 

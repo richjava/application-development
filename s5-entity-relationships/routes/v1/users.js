@@ -104,7 +104,7 @@ router.put('/:user', function(req, res, next) {
 * /v1/users/:userId
 */ 
 router.delete('/:user', function(req, res, next) {
-      return User.deleteOne({ id: req.user.id }).then(function(){
+      return User.findByIdAndRemove(req.article.id).then(function(){
         return res.sendStatus(204);
       });
 });
@@ -165,6 +165,55 @@ router.post('/:user/articles', function (req, res, next) {
           return res.json({ article: article.toJSON() });
         });
       });
+});
+
+/***************************
+* Entity relationships s5: Auth
+***************************/
+
+/**
+ * Login. 
+ * /v1/users/login
+ */
+router.post('/login', function (req, res, next) {
+  // server-side validation
+  if (!req.body.email) {
+    return res.status(422).json({ success: false, message: "Email can't be blank" })
+  }
+
+  User.findOne({ email: req.body.email })
+    .then(function (user) {
+      if (!user) { return res.status(422).json({ success: false, message: "User not found" }) }
+      req.user = user;
+      return res.json({ success: true });
+    })
+});
+
+/**
+ * Register a user. 
+ * /v1/users/register
+ */
+router.post('/register', function (req, res, next) {
+  //server-side validation
+  if (!req.body.firstName) {
+    return res.status(422).json({ success: false, message: "First name can't be blank" })
+  }
+  if (!req.body.lastName) {
+    return res.status(422).json({ success: false, message: "Last name can't be blank" })
+  }
+  if (!req.body.email) {
+    return res.status(422).json({ success: false, message: "Email can't be blank" })
+  }
+
+  User.findOne({ email: req.body.email })
+    .then(function (user) {
+      if (user) { return res.status(422).json({ success: false, message: "User already exists" }) }
+      var user = new User(req.body);
+     user.displayName = user.firstName + " " + user.lastName;
+    return user.save().then(function(){
+      return res.json({ success: true });
+    });
+    })
 });
 
 module.exports = router;
